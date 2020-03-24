@@ -1,0 +1,8 @@
+services:
+  monolith: "8000"
+  ms-api-gateway: "80"
+  ms-data-cleaning: "4003"
+  ms-line-count: "4002"
+  ms-browser-counts: "4004"
+  ms-visitor-counts: "4005"
+  ms-website-counts: "4006"

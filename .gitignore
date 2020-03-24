@@ -1,0 +1,27 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*bin/*
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+vendor/
+
+## ETL pipeline DB and executables
+ETL.db
+monolith/monolith
+ms-api-gateway/ms-api-gateway
+ms-data-cleaning/ms-data-cleaning
+ms-line-count/ms-line-count
+ms-browser-counts/ms-browser-counts
+ms-visitor-counts/ms-visitor-counts
+ms-website-counts/ms-website-counts
+
+.DS_Store
