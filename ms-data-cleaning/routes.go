@@ -11,7 +11,8 @@ import (
 
 //BodyStruct represents the body of a request. Add json fields below as needed
 type BodyStruct struct {
-	FName string `json:"fname"`
+	FName   string `json:"fname"`
+	ANumber int    `json:"anumber"`
 }
 
 //YOU WILL NEED TO CHANGE THIS TO THE REAL FUNCTIONALITY

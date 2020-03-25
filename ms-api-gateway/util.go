@@ -20,6 +20,7 @@ func runPipeline(fname string) map[string]bool {
 
 	//parseFile
 	//make call to datacleaner microservice here
+	results["Data Cleaner"] = dataCleaner(fname)
 
 	//count lines
 	results["Count Lines"] = countLines(fname)
@@ -34,6 +35,51 @@ func runPipeline(fname string) map[string]bool {
 	//make call to websiteCounter microservice here
 
 	return results
+}
+
+//ReqStruct represents the body of a request. Add json fields below as needed
+type ReqStruct struct {
+	FName   string `json:"fname"`
+	ANumber int    `json:"anumber"`
+}
+
+func dataCleaner(fname string) bool {
+
+	requestBody, err := json.Marshal(ReqStruct{
+		FName:   fname,
+		ANumber: 123,
+	})
+	if err != nil {
+		log.Println("Error parsing countLines request body:", requestBody)
+		return false
+	}
+
+	url := "http://localhost:" + viper.GetString("services.ms-data-cleaning") + "/timsfunc"
+
+	log.Println("Posting URL: ", url, " with ", string(requestBody))
+	//make request to ms
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(requestBody))
+	if err != nil {
+		log.Println("Error making post request to ", url, ": ", err)
+		return false
+	}
+	defer resp.Body.Close()
+
+	//decode reesponse body
+	var result map[string]interface{}
+	// var result Response
+	err = json.NewDecoder(resp.Body).Decode(&result)
+	if err != nil {
+		log.Println("Error decoding json:", err)
+		return false
+	}
+	//if statusCode is above 300 then its an error, parse and return
+	if result["statusCode"].(float64) > 300 {
+		log.Println("Error", result["error"].(string))
+		return false
+	}
+	//otherwise succesful return true
+	return true
 }
 
 func countLines(fname string) bool {

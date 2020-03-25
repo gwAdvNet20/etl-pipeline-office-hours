@@ -58,7 +58,7 @@ func main() {
 	r := mux.NewRouter()
 
 	//Define your routes here. You may need to add more routes here.
-	r.HandleFunc("/route", handleRoute).Methods("POST")
+	r.HandleFunc("/timsfunc", handleRoute).Methods("POST")
 	r.HandleFunc("/route/with/{PARAM_NAME}", handleRouteParameter).Methods("GET")
 
 	//Serve the webserver. You should not change this
