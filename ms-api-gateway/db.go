@@ -2,7 +2,9 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+	"os"
 )
 
 //Database controls database functionality
@@ -14,6 +16,14 @@ type Database struct {
 type LineCountRow struct {
 	Key   string
 	Count int
+}
+
+func (d *Database) ClearOldDB() {
+	err := os.Remove("../ETL.db")
+	if err != nil {
+		fmt.Println("Couldn't remove file: ", err)
+		return
+	}
 }
 
 //Store stores a logfile in a database
@@ -49,7 +59,7 @@ func (d *Database) dbInit() {
 	sqlStmt := `
 	CREATE TABLE IF NOT EXISTS logs (
 		name TEXT NOT NULL,
-		raw_log TEXT NOT NULL UNIQUE,
+		raw_log TEXT NOT NULL,
 		remote_addr TEXT,
 		time_local TEXT,
 		request_type TEXT,

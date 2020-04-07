@@ -39,6 +39,9 @@ func main() {
 	//Start DB connection
 	LogStore = Database{}
 
+	// Remove old db file
+	LogStore.ClearOldDB()
+
 	//read config from file using viper.
 	ReadConfig()
 
